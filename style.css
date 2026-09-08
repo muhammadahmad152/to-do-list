@@ -1,0 +1,1030 @@
+/* =========================================================
+   ADVANCED 3D TODO LIST
+   3D Glass + Neon + Depth UI
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg-1: #080b16;
+    --bg-2: #11182b;
+
+    --card: rgba(20, 27, 48, 0.72);
+    --card-light: rgba(255, 255, 255, 0.08);
+
+    --text: #f4f7ff;
+    --muted: #9da8c2;
+
+    --cyan: #00e5ff;
+    --blue: #5b7cff;
+    --purple: #9b5cff;
+    --green: #21e6a5;
+    --red: #ff5577;
+    --yellow: #ffc857;
+
+    --border: rgba(255, 255, 255, 0.12);
+
+    --shadow:
+        0 30px 70px rgba(0, 0, 0, 0.45),
+        0 10px 25px rgba(0, 229, 255, 0.08);
+
+    --radius: 24px;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 20px;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(91, 124, 255, .22), transparent 28%),
+        radial-gradient(circle at 85% 75%, rgba(155, 92, 255, .18), transparent 30%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+
+    position: relative;
+}
+
+/* =========================================================
+   3D BACKGROUND ORBS
+   ========================================================= */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+    z-index: -1;
+}
+
+body::before {
+    width: 280px;
+    height: 280px;
+    top: -80px;
+    left: -70px;
+
+    background: radial-gradient(
+        circle,
+        rgba(0, 229, 255, .22),
+        transparent 70%
+    );
+
+    box-shadow:
+        120px 180px 100px rgba(91, 124, 255, .12),
+        800px 500px 120px rgba(155, 92, 255, .14);
+
+    animation: floatOrb 8s ease-in-out infinite;
+}
+
+body::after {
+    width: 220px;
+    height: 220px;
+    right: -60px;
+    bottom: -60px;
+
+    background: radial-gradient(
+        circle,
+        rgba(155, 92, 255, .24),
+        transparent 70%
+    );
+
+    animation: floatOrb 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+    0%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(25px, -30px, 0);
+    }
+}
+
+/* =========================================================
+   DARK / LIGHT TOGGLE
+   ========================================================= */
+
+.toggle-container {
+    position: fixed;
+    top: 24px;
+    right: 28px;
+    z-index: 100;
+}
+
+.toggle-container .input {
+    display: none;
+}
+
+.toggle-container .label {
+    width: 72px;
+    height: 36px;
+    padding: 4px;
+    display: block;
+    cursor: pointer;
+    border-radius: 50px;
+
+    background: linear-gradient(
+        145deg,
+        #11182b,
+        #273453
+    );
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        inset 3px 3px 8px rgba(0,0,0,.45),
+        inset -2px -2px 5px rgba(255,255,255,.05),
+        0 8px 25px rgba(0,0,0,.3);
+
+    transition: .4s ease;
+}
+
+.toggle-container .circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff,
+        #cdd6ed
+    );
+
+    color: #18203a;
+
+    box-shadow:
+        4px 4px 8px rgba(0,0,0,.35),
+        -2px -2px 5px rgba(255,255,255,.7);
+
+    transform: translateX(0);
+    transition: .45s cubic-bezier(.68,-.55,.27,1.55);
+}
+
+.toggle-container .input:checked + .label .circle {
+    transform: translateX(36px);
+    background: linear-gradient(
+        145deg,
+        #242d49,
+        #11182b
+    );
+
+    color: var(--cyan);
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+}
+
+.moon {
+    display: none;
+}
+
+.input:checked + .label .sun {
+    display: none;
+}
+
+.input:checked + .label .moon {
+    display: block;
+}
+
+/* =========================================================
+   TODO APP MAIN
+   ========================================================= */
+
+.todo-app {
+    width: min(720px, 100%);
+    padding: 38px;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    transform-style: preserve-3d;
+
+    animation: appEnter .8s cubic-bezier(.2,.8,.2,1);
+}
+
+/* 3D Top Edge */
+
+.todo-app::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 84%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--cyan),
+        var(--purple),
+        transparent
+    );
+
+    box-shadow: 0 0 20px var(--cyan);
+}
+
+/* 3D bottom shadow */
+
+.todo-app::after {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 25px;
+    left: 10%;
+    bottom: -20px;
+
+    background: rgba(0, 229, 255, .12);
+    filter: blur(25px);
+    z-index: -1;
+}
+
+@keyframes appEnter {
+    from {
+        opacity: 0;
+        transform:
+            perspective(1000px)
+            rotateX(10deg)
+            translateY(40px)
+            scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            perspective(1000px)
+            rotateX(0)
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.todo-app h2 {
+    text-align: center;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 800;
+    margin-bottom: 32px;
+
+    letter-spacing: -1px;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        var(--cyan),
+        #ffffff,
+        var(--purple)
+    );
+
+    background-size: 250% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: titleGlow 5s linear infinite;
+}
+
+.todo-app h2 i {
+    font-size: .72em;
+    color: var(--cyan);
+    filter: drop-shadow(0 0 10px var(--cyan));
+}
+
+@keyframes titleGlow {
+    to {
+        background-position: 250% center;
+    }
+}
+
+/* =========================================================
+   INPUT FORM
+   ========================================================= */
+
+.input-container {
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(0,0,0,.12)
+        );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        inset 2px 2px 8px rgba(255,255,255,.025),
+        inset -4px -4px 12px rgba(0,0,0,.22);
+}
+
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+.input-box {
+    flex: 1;
+    min-width: 0;
+
+    padding: 15px 17px;
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+
+    outline: none;
+
+    color: white;
+    background: rgba(5, 9, 20, .65);
+
+    box-shadow:
+        inset 4px 4px 10px rgba(0,0,0,.35),
+        inset -2px -2px 5px rgba(255,255,255,.025);
+
+    transition: .3s ease;
+}
+
+.input-box::placeholder {
+    color: #74809b;
+}
+
+.input-box:focus {
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 0 3px rgba(0,229,255,.08),
+        0 0 25px rgba(0,229,255,.12),
+        inset 4px 4px 10px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   ADD BUTTON
+   ========================================================= */
+
+.add-btn {
+    border: none;
+    padding: 0 24px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    color: #031116;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f5ff,
+            #00c8ff
+        );
+
+    box-shadow:
+        0 8px 0 #007e9d,
+        0 14px 25px rgba(0,229,255,.25);
+
+    transition: .18s ease;
+}
+
+.add-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 11px 0 #007e9d,
+        0 20px 35px rgba(0,229,255,.35);
+}
+
+.add-btn:active {
+    transform: translateY(5px);
+
+    box-shadow:
+        0 3px 0 #007e9d,
+        0 7px 15px rgba(0,229,255,.2);
+}
+
+/* =========================================================
+   OPTIONS
+   ========================================================= */
+
+.options-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 13px;
+}
+
+.select-box,
+.date-box {
+    width: 100%;
+    padding: 13px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    outline: none;
+
+    color: #dce5ff;
+    background: #11182b;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.select-box:hover,
+.date-box:hover,
+.select-box:focus,
+.date-box:focus {
+    border-color: var(--purple);
+
+    box-shadow:
+        0 0 18px rgba(155,92,255,.15);
+}
+
+/* =========================================================
+   FILTER BUTTONS
+   ========================================================= */
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin: 28px 0;
+    padding: 7px;
+
+    border-radius: 15px;
+
+    background: rgba(0,0,0,.18);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.filter-btn {
+    flex: 1;
+
+    border: none;
+    padding: 11px 15px;
+
+    border-radius: 10px;
+
+    color: #8995b1;
+    background: transparent;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.filter-btn:hover {
+    color: white;
+    background: rgba(255,255,255,.07);
+}
+
+.filter-btn.active {
+    color: #041015;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            #58a6ff
+        );
+
+    box-shadow:
+        0 5px 18px rgba(0,229,255,.2);
+
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   TASK LIST
+   ========================================================= */
+
+.task-list {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    max-height: 420px;
+    overflow-y: auto;
+
+    padding: 3px;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        var(--cyan),
+        var(--purple)
+    );
+
+    border-radius: 20px;
+}
+
+/* =========================================================
+   TASK CARD
+   ========================================================= */
+
+.task-list li {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 17px 18px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(0,0,0,.16)
+        );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        6px 6px 15px rgba(0,0,0,.22),
+        -3px -3px 10px rgba(255,255,255,.025);
+
+    transform:
+        perspective(700px)
+        translateZ(0);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+.task-list li:hover {
+    transform:
+        perspective(700px)
+        translateY(-5px)
+        rotateX(2deg)
+        translateZ(8px);
+
+    border-color: rgba(0,229,255,.25);
+
+    box-shadow:
+        12px 18px 30px rgba(0,0,0,.35),
+        0 0 25px rgba(0,229,255,.08);
+}
+
+/* =========================================================
+   PRIORITY INDICATORS
+   ========================================================= */
+
+.task-list li::before {
+    content: "";
+    width: 4px;
+    height: 55%;
+
+    position: absolute;
+    left: 0;
+    top: 22%;
+
+    border-radius: 0 8px 8px 0;
+
+    box-shadow: 0 0 12px currentColor;
+}
+
+.priority-low::before {
+    color: var(--green);
+    background: var(--green);
+}
+
+.priority-medium::before {
+    color: var(--yellow);
+    background: var(--yellow);
+}
+
+.priority-high::before {
+    color: var(--red);
+    background: var(--red);
+}
+
+/* =========================================================
+   TASK INFO
+   ========================================================= */
+
+.task-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.task-text {
+    color: #f4f7ff;
+    font-size: 15px;
+    font-weight: 600;
+
+    word-break: break-word;
+
+    transition: .3s;
+}
+
+.completed .task-text {
+    color: #68748f;
+    text-decoration: line-through;
+    text-decoration-color: var(--cyan);
+    text-decoration-thickness: 2px;
+}
+
+.due-tag {
+    width: fit-content;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    color: #8f9ab5;
+
+    background: rgba(255,255,255,.05);
+
+    font-size: 11px;
+}
+
+.due-tag i {
+    color: var(--cyan);
+    margin-right: 4px;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+}
+
+.actions i {
+    width: 37px;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    background: rgba(255,255,255,.055);
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    transition:
+        transform .25s ease,
+        color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.check-icon {
+    color: var(--green);
+}
+
+.edit-icon {
+    color: #70a7ff;
+}
+
+.delete-icon {
+    color: var(--red);
+}
+
+.actions i:hover {
+    transform:
+        translateY(-4px)
+        scale(1.08);
+
+    background: rgba(255,255,255,.10);
+}
+
+.check-icon:hover {
+    box-shadow: 0 8px 20px rgba(33,230,165,.22);
+}
+
+.edit-icon:hover {
+    box-shadow: 0 8px 20px rgba(112,167,255,.22);
+}
+
+.delete-icon:hover {
+    box-shadow: 0 8px 20px rgba(255,85,119,.22);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.clear-btn {
+    border: 1px solid rgba(255,85,119,.25);
+
+    color: #ff718d;
+    background: rgba(255,85,119,.06);
+
+    padding: 9px 14px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+    font-weight: 600;
+
+    transition: .3s ease;
+}
+
+.clear-btn:hover {
+    color: white;
+    background: var(--red);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(255,85,119,.25);
+}
+
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+
+body:has(#dark-mode:not(:checked)) {
+    --text: #182033;
+    --muted: #69748a;
+
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(0,180,255,.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(120,70,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #edf5ff,
+            #dce8ff
+        );
+}
+
+body:has(#dark-mode:not(:checked)) .todo-app {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.78),
+            rgba(255,255,255,.48)
+        );
+
+    border-color: rgba(255,255,255,.75);
+
+    box-shadow:
+        25px 35px 70px rgba(55,75,110,.18),
+        -10px -10px 30px rgba(255,255,255,.8);
+}
+
+body:has(#dark-mode:not(:checked)) .input-container {
+    background: rgba(255,255,255,.38);
+    border-color: rgba(255,255,255,.6);
+}
+
+body:has(#dark-mode:not(:checked)) .input-box {
+    color: #182033;
+    background: rgba(255,255,255,.75);
+    border-color: rgba(50,70,110,.12);
+
+    box-shadow:
+        inset 3px 3px 8px rgba(70,90,130,.10);
+}
+
+body:has(#dark-mode:not(:checked)) .select-box,
+body:has(#dark-mode:not(:checked)) .date-box {
+    color: #182033;
+    background: rgba(255,255,255,.75);
+}
+
+body:has(#dark-mode:not(:checked)) .task-list li {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.85),
+            rgba(245,248,255,.65)
+        );
+
+    border-color: rgba(70,90,130,.10);
+
+    box-shadow:
+        8px 10px 22px rgba(50,70,110,.10),
+        -5px -5px 14px rgba(255,255,255,.85);
+}
+
+body:has(#dark-mode:not(:checked)) .task-text {
+    color: #182033;
+}
+
+body:has(#dark-mode:not(:checked)) .completed .task-text {
+    color: #8a94a8;
+}
+
+body:has(#dark-mode:not(:checked)) .filter-container {
+    background: rgba(255,255,255,.35);
+}
+
+body:has(#dark-mode:not(:checked)) .filter-btn {
+    color: #657089;
+}
+
+body:has(#dark-mode:not(:checked)) .filter-btn.active {
+    color: white;
+}
+
+body:has(#dark-mode:not(:checked)) .app-footer {
+    border-color: rgba(50,70,110,.12);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 65px 12px 30px;
+    }
+
+    .toggle-container {
+        top: 15px;
+        right: 15px;
+    }
+
+    .todo-app {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+
+    .todo-app h2 {
+        margin-bottom: 23px;
+        font-size: 28px;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    .add-btn {
+        height: 48px;
+    }
+
+    .options-row {
+        grid-template-columns: 1fr;
+    }
+
+    .task-list li {
+        align-items: flex-start;
+    }
+
+    .actions {
+        gap: 5px;
+    }
+
+    .actions i {
+        width: 34px;
+        height: 34px;
+    }
+
+    .app-footer {
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .clear-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .filter-container {
+        gap: 4px;
+    }
+
+    .filter-btn {
+        padding: 9px 5px;
+        font-size: 12px;
+    }
+
+    .task-list li {
+        padding: 14px 12px;
+    }
+
+    .task-text {
+        font-size: 14px;
+    }
+
+    .actions i {
+        width: 31px;
+        height: 31px;
+        font-size: 12px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

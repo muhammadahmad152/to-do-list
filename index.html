@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Dark / Light Mode Toggle -->
+    <div class="toggle-container">
+        <input type="checkbox" id="dark-mode" class="input">
+        <label for="dark-mode" class="label">
+            <div class="circle">
+                <!-- Sun Icon -->
+                <svg class="icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <!-- Moon Icon -->
+                <svg class="icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </div>
+        </label>
+    </div>
+
+    <!-- Main App Container -->
+    <main class="todo-app">
+        <h2>To-Do List <i class="fas fa-tasks"></i></h2>
+
+        <!-- Task Input Form -->
+        <form class="input-container" id="todo-form">
+            <div class="input-row">
+                <input type="text" class="input-box" id="todo-input" placeholder="Add a new task..." required autocomplete="off">
+                <button type="submit" class="add-btn"><i class="fas fa-plus"></i> Add</button>
+            </div>
+
+            <!-- Additional Options -->
+            <div class="options-row">
+                <select id="priority-select" class="select-box">
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <input type="date" id="due-date" class="date-box">
+            </div>
+        </form>
+
+        <!-- Filters Section -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <!-- Task List -->
+        <ul class="task-list" id="task-list">
+            <!-- Sample Task 1 -->
+            <li class="priority-medium">
+                <div class="task-info">
+                    <span class="task-text">Buy groceries</span>
+                    <small class="due-tag"><i class="far fa-calendar-alt"></i> Today</small>
+                </div>
+                <div class="actions">
+                    <i class="fas fa-check-square check-icon" title="Mark Complete"></i>
+                    <i class="fas fa-pen edit-icon" title="Edit Task"></i>
+                    <i class="fas fa-trash delete-icon" title="Delete Task"></i>
+                </div>
+            </li>
+            <!-- Sample Task 2 -->
+            <li class="priority-high completed">
+                <div class="task-info">
+                    <span class="task-text">Call David</span>
+                    <small class="due-tag"><i class="far fa-calendar-alt"></i> Tomorrow</small>
+                </div>
+                <div class="actions">
+                    <i class="fas fa-check-square check-icon" title="Mark Complete"></i>
+                    <i class="fas fa-pen edit-icon" title="Edit Task"></i>
+                    <i class="fas fa-trash delete-icon" title="Delete Task"></i>
+                </div>
+            </li>
+        </ul>
+
+        <!-- App Footer & Stats -->
+        <div class="app-footer">
+            <span id="tasks-count">2 tasks remaining</span>
+            <button id="clear-completed-btn" class="clear-btn">Clear Completed</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
