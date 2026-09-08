@@ -1,7 +1,5 @@
-/* =========================================================
-   ADVANCED 3D TODO LIST
-   3D Glass + Neon + Depth UI
-   ========================================================= */
+/* ADVANCED 3D TODO LIST
+    3D Glass + Neon + Depth UI */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -31,9 +29,7 @@
     --radius: 24px;
 }
 
-/* =========================================================
-   RESET
-   ========================================================= */
+/* RESET */
 
 * {
     margin: 0;
@@ -59,9 +55,7 @@ body {
     position: relative;
 }
 
-/* =========================================================
-   3D BACKGROUND ORBS
-   ========================================================= */
+/* 3D BACKGROUND ORBS */
 
 body::before,
 body::after {
@@ -79,11 +73,9 @@ body::before {
     top: -80px;
     left: -70px;
 
-    background: radial-gradient(
-        circle,
-        rgba(0, 229, 255, .22),
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(0, 229, 255, .22),
+            transparent 70%);
 
     box-shadow:
         120px 180px 100px rgba(91, 124, 255, .12),
@@ -98,17 +90,17 @@ body::after {
     right: -60px;
     bottom: -60px;
 
-    background: radial-gradient(
-        circle,
-        rgba(155, 92, 255, .24),
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(155, 92, 255, .24),
+            transparent 70%);
 
     animation: floatOrb 10s ease-in-out infinite reverse;
 }
 
 @keyframes floatOrb {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate3d(0, 0, 0);
     }
 
@@ -117,9 +109,7 @@ body::after {
     }
 }
 
-/* =========================================================
-   DARK / LIGHT TOGGLE
-   ========================================================= */
+/* DARK / LIGHT TOGGLE */
 
 .toggle-container {
     position: fixed;
@@ -140,18 +130,16 @@ body::after {
     cursor: pointer;
     border-radius: 50px;
 
-    background: linear-gradient(
-        145deg,
-        #11182b,
-        #273453
-    );
+    background: linear-gradient(145deg,
+            #11182b,
+            #273453);
 
-    border: 1px solid rgba(255,255,255,.15);
+    border: 1px solid rgba(255, 255, 255, .15);
 
     box-shadow:
-        inset 3px 3px 8px rgba(0,0,0,.45),
-        inset -2px -2px 5px rgba(255,255,255,.05),
-        0 8px 25px rgba(0,0,0,.3);
+        inset 3px 3px 8px rgba(0, 0, 0, .45),
+        inset -2px -2px 5px rgba(255, 255, 255, .05),
+        0 8px 25px rgba(0, 0, 0, .3);
 
     transition: .4s ease;
 }
@@ -165,29 +153,25 @@ body::after {
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(
-        145deg,
-        #ffffff,
-        #cdd6ed
-    );
+    background: linear-gradient(145deg,
+            #ffffff,
+            #cdd6ed);
 
     color: #18203a;
 
     box-shadow:
-        4px 4px 8px rgba(0,0,0,.35),
-        -2px -2px 5px rgba(255,255,255,.7);
+        4px 4px 8px rgba(0, 0, 0, .35),
+        -2px -2px 5px rgba(255, 255, 255, .7);
 
     transform: translateX(0);
-    transition: .45s cubic-bezier(.68,-.55,.27,1.55);
+    transition: .45s cubic-bezier(.68, -.55, .27, 1.55);
 }
 
-.toggle-container .input:checked + .label .circle {
+.toggle-container .input:checked+.label .circle {
     transform: translateX(36px);
-    background: linear-gradient(
-        145deg,
-        #242d49,
-        #11182b
-    );
+    background: linear-gradient(145deg,
+            #242d49,
+            #11182b);
 
     color: var(--cyan);
 }
@@ -201,17 +185,15 @@ body::after {
     display: none;
 }
 
-.input:checked + .label .sun {
+.input:checked+.label .sun {
     display: none;
 }
 
-.input:checked + .label .moon {
+.input:checked+.label .moon {
     display: block;
 }
 
-/* =========================================================
-   TODO APP MAIN
-   ========================================================= */
+/* TODO APP MAIN */
 
 .todo-app {
     width: min(720px, 100%);
@@ -220,11 +202,9 @@ body::after {
     position: relative;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.10),
-            rgba(255,255,255,.025)
-        );
+        linear-gradient(145deg,
+            rgba(255, 255, 255, .10),
+            rgba(255, 255, 255, .025));
 
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
@@ -236,7 +216,7 @@ body::after {
 
     transform-style: preserve-3d;
 
-    animation: appEnter .8s cubic-bezier(.2,.8,.2,1);
+    animation: appEnter .8s cubic-bezier(.2, .8, .2, 1);
 }
 
 /* 3D Top Edge */
@@ -249,13 +229,11 @@ body::after {
     width: 84%;
     height: 2px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--cyan),
-        var(--purple),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            var(--cyan),
+            var(--purple),
+            transparent);
 
     box-shadow: 0 0 20px var(--cyan);
 }
@@ -279,25 +257,17 @@ body::after {
     from {
         opacity: 0;
         transform:
-            perspective(1000px)
-            rotateX(10deg)
-            translateY(40px)
-            scale(.96);
+            perspective(1000px) rotateX(10deg) translateY(40px) scale(.96);
     }
 
     to {
         opacity: 1;
         transform:
-            perspective(1000px)
-            rotateX(0)
-            translateY(0)
-            scale(1);
+            perspective(1000px) rotateX(0) translateY(0) scale(1);
     }
 }
 
-/* =========================================================
-   HEADING
-   ========================================================= */
+/* HEADING */
 
 .todo-app h2 {
     text-align: center;
@@ -307,13 +277,11 @@ body::after {
 
     letter-spacing: -1px;
 
-    background: linear-gradient(
-        90deg,
-        #ffffff,
-        var(--cyan),
-        #ffffff,
-        var(--purple)
-    );
+    background: linear-gradient(90deg,
+            #ffffff,
+            var(--cyan),
+            #ffffff,
+            var(--purple));
 
     background-size: 250% auto;
 
@@ -336,9 +304,7 @@ body::after {
     }
 }
 
-/* =========================================================
-   INPUT FORM
-   ========================================================= */
+/* INPUT FORM */
 
 .input-container {
     padding: 20px;
@@ -346,17 +312,15 @@ body::after {
     border-radius: 18px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.07),
-            rgba(0,0,0,.12)
-        );
+        linear-gradient(145deg,
+            rgba(255, 255, 255, .07),
+            rgba(0, 0, 0, .12));
 
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255, 255, 255, .08);
 
     box-shadow:
-        inset 2px 2px 8px rgba(255,255,255,.025),
-        inset -4px -4px 12px rgba(0,0,0,.22);
+        inset 2px 2px 8px rgba(255, 255, 255, .025),
+        inset -4px -4px 12px rgba(0, 0, 0, .22);
 }
 
 .input-row {
@@ -370,7 +334,7 @@ body::after {
 
     padding: 15px 17px;
 
-    border: 1px solid rgba(255,255,255,.12);
+    border: 1px solid rgba(255, 255, 255, .12);
     border-radius: 14px;
 
     outline: none;
@@ -379,8 +343,8 @@ body::after {
     background: rgba(5, 9, 20, .65);
 
     box-shadow:
-        inset 4px 4px 10px rgba(0,0,0,.35),
-        inset -2px -2px 5px rgba(255,255,255,.025);
+        inset 4px 4px 10px rgba(0, 0, 0, .35),
+        inset -2px -2px 5px rgba(255, 255, 255, .025);
 
     transition: .3s ease;
 }
@@ -393,14 +357,12 @@ body::after {
     border-color: var(--cyan);
 
     box-shadow:
-        0 0 0 3px rgba(0,229,255,.08),
-        0 0 25px rgba(0,229,255,.12),
-        inset 4px 4px 10px rgba(0,0,0,.35);
+        0 0 0 3px rgba(0, 229, 255, .08),
+        0 0 25px rgba(0, 229, 255, .12),
+        inset 4px 4px 10px rgba(0, 0, 0, .35);
 }
 
-/* =========================================================
-   ADD BUTTON
-   ========================================================= */
+/* ADD BUTTON */
 
 .add-btn {
     border: none;
@@ -414,15 +376,13 @@ body::after {
     font-weight: 800;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             #00f5ff,
-            #00c8ff
-        );
+            #00c8ff);
 
     box-shadow:
         0 8px 0 #007e9d,
-        0 14px 25px rgba(0,229,255,.25);
+        0 14px 25px rgba(0, 229, 255, .25);
 
     transition: .18s ease;
 }
@@ -432,7 +392,7 @@ body::after {
 
     box-shadow:
         0 11px 0 #007e9d,
-        0 20px 35px rgba(0,229,255,.35);
+        0 20px 35px rgba(0, 229, 255, .35);
 }
 
 .add-btn:active {
@@ -440,12 +400,10 @@ body::after {
 
     box-shadow:
         0 3px 0 #007e9d,
-        0 7px 15px rgba(0,229,255,.2);
+        0 7px 15px rgba(0, 229, 255, .2);
 }
 
-/* =========================================================
-   OPTIONS
-   ========================================================= */
+/* OPTIONS */
 
 .options-row {
     display: grid;
@@ -461,7 +419,7 @@ body::after {
 
     border-radius: 12px;
 
-    border: 1px solid rgba(255,255,255,.1);
+    border: 1px solid rgba(255, 255, 255, .1);
 
     outline: none;
 
@@ -480,12 +438,10 @@ body::after {
     border-color: var(--purple);
 
     box-shadow:
-        0 0 18px rgba(155,92,255,.15);
+        0 0 18px rgba(155, 92, 255, .15);
 }
 
-/* =========================================================
-   FILTER BUTTONS
-   ========================================================= */
+/* FILTER BUTTONS */
 
 .filter-container {
     display: flex;
@@ -497,8 +453,8 @@ body::after {
 
     border-radius: 15px;
 
-    background: rgba(0,0,0,.18);
-    border: 1px solid rgba(255,255,255,.06);
+    background: rgba(0, 0, 0, .18);
+    border: 1px solid rgba(255, 255, 255, .06);
 }
 
 .filter-btn {
@@ -521,28 +477,24 @@ body::after {
 
 .filter-btn:hover {
     color: white;
-    background: rgba(255,255,255,.07);
+    background: rgba(255, 255, 255, .07);
 }
 
 .filter-btn.active {
     color: #041015;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             var(--cyan),
-            #58a6ff
-        );
+            #58a6ff);
 
     box-shadow:
-        0 5px 18px rgba(0,229,255,.2);
+        0 5px 18px rgba(0, 229, 255, .2);
 
     transform: translateY(-1px);
 }
 
-/* =========================================================
-   TASK LIST
-   ========================================================= */
+/* TASK LIST */
 
 .task-list {
     list-style: none;
@@ -562,17 +514,13 @@ body::after {
 }
 
 .task-list::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-        var(--cyan),
-        var(--purple)
-    );
+    background: linear-gradient(var(--cyan),
+            var(--purple));
 
     border-radius: 20px;
 }
 
-/* =========================================================
-   TASK CARD
-   ========================================================= */
+/* TASK CARD */
 
 .task-list li {
     position: relative;
@@ -588,21 +536,18 @@ body::after {
     border-radius: 17px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(0,0,0,.16)
-        );
+        linear-gradient(145deg,
+            rgba(255, 255, 255, .075),
+            rgba(0, 0, 0, .16));
 
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255, 255, 255, .08);
 
     box-shadow:
-        6px 6px 15px rgba(0,0,0,.22),
-        -3px -3px 10px rgba(255,255,255,.025);
+        6px 6px 15px rgba(0, 0, 0, .22),
+        -3px -3px 10px rgba(255, 255, 255, .025);
 
     transform:
-        perspective(700px)
-        translateZ(0);
+        perspective(700px) translateZ(0);
 
     transition:
         transform .35s ease,
@@ -612,21 +557,16 @@ body::after {
 
 .task-list li:hover {
     transform:
-        perspective(700px)
-        translateY(-5px)
-        rotateX(2deg)
-        translateZ(8px);
+        perspective(700px) translateY(-5px) rotateX(2deg) translateZ(8px);
 
-    border-color: rgba(0,229,255,.25);
+    border-color: rgba(0, 229, 255, .25);
 
     box-shadow:
-        12px 18px 30px rgba(0,0,0,.35),
-        0 0 25px rgba(0,229,255,.08);
+        12px 18px 30px rgba(0, 0, 0, .35),
+        0 0 25px rgba(0, 229, 255, .08);
 }
 
-/* =========================================================
-   PRIORITY INDICATORS
-   ========================================================= */
+/* PRIORITY INDICATORS */
 
 .task-list li::before {
     content: "";
@@ -657,9 +597,7 @@ body::after {
     background: var(--red);
 }
 
-/* =========================================================
-   TASK INFO
-   ========================================================= */
+/* TASK INFO */
 
 .task-info {
     min-width: 0;
@@ -694,7 +632,7 @@ body::after {
 
     color: #8f9ab5;
 
-    background: rgba(255,255,255,.05);
+    background: rgba(255, 255, 255, .05);
 
     font-size: 11px;
 }
@@ -704,9 +642,7 @@ body::after {
     margin-right: 4px;
 }
 
-/* =========================================================
-   ACTION BUTTONS
-   ========================================================= */
+/* ACTION BUTTONS */
 
 .actions {
     display: flex;
@@ -727,9 +663,9 @@ body::after {
 
     cursor: pointer;
 
-    background: rgba(255,255,255,.055);
+    background: rgba(255, 255, 255, .055);
 
-    border: 1px solid rgba(255,255,255,.07);
+    border: 1px solid rgba(255, 255, 255, .07);
 
     transition:
         transform .25s ease,
@@ -752,27 +688,24 @@ body::after {
 
 .actions i:hover {
     transform:
-        translateY(-4px)
-        scale(1.08);
+        translateY(-4px) scale(1.08);
 
-    background: rgba(255,255,255,.10);
+    background: rgba(255, 255, 255, .10);
 }
 
 .check-icon:hover {
-    box-shadow: 0 8px 20px rgba(33,230,165,.22);
+    box-shadow: 0 8px 20px rgba(33, 230, 165, .22);
 }
 
 .edit-icon:hover {
-    box-shadow: 0 8px 20px rgba(112,167,255,.22);
+    box-shadow: 0 8px 20px rgba(112, 167, 255, .22);
 }
 
 .delete-icon:hover {
-    box-shadow: 0 8px 20px rgba(255,85,119,.22);
+    box-shadow: 0 8px 20px rgba(255, 85, 119, .22);
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+/* FOOTER */
 
 .app-footer {
     display: flex;
@@ -782,17 +715,17 @@ body::after {
     margin-top: 24px;
     padding-top: 20px;
 
-    border-top: 1px solid rgba(255,255,255,.08);
+    border-top: 1px solid rgba(255, 255, 255, .08);
 
     color: var(--muted);
     font-size: 13px;
 }
 
 .clear-btn {
-    border: 1px solid rgba(255,85,119,.25);
+    border: 1px solid rgba(255, 85, 119, .25);
 
     color: #ff718d;
-    background: rgba(255,85,119,.06);
+    background: rgba(255, 85, 119, .06);
 
     padding: 9px 14px;
 
@@ -811,83 +744,71 @@ body::after {
     transform: translateY(-2px);
 
     box-shadow:
-        0 8px 20px rgba(255,85,119,.25);
+        0 8px 20px rgba(255, 85, 119, .25);
 }
 
-/* =========================================================
-   LIGHT MODE
-   ========================================================= */
+/* LIGHT MODE */
 
 body:has(#dark-mode:not(:checked)) {
     --text: #182033;
     --muted: #69748a;
 
     background:
-        radial-gradient(
-            circle at 10% 15%,
-            rgba(0,180,255,.14),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 80%,
-            rgba(120,70,255,.12),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
+        radial-gradient(circle at 10% 15%,
+            rgba(0, 180, 255, .14),
+            transparent 28%),
+        radial-gradient(circle at 90% 80%,
+            rgba(120, 70, 255, .12),
+            transparent 30%),
+        linear-gradient(135deg,
             #edf5ff,
-            #dce8ff
-        );
+            #dce8ff);
 }
 
 body:has(#dark-mode:not(:checked)) .todo-app {
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.78),
-            rgba(255,255,255,.48)
-        );
+        linear-gradient(145deg,
+            rgba(255, 255, 255, .78),
+            rgba(255, 255, 255, .48));
 
-    border-color: rgba(255,255,255,.75);
+    border-color: rgba(255, 255, 255, .75);
 
     box-shadow:
-        25px 35px 70px rgba(55,75,110,.18),
-        -10px -10px 30px rgba(255,255,255,.8);
+        25px 35px 70px rgba(55, 75, 110, .18),
+        -10px -10px 30px rgba(255, 255, 255, .8);
 }
 
 body:has(#dark-mode:not(:checked)) .input-container {
-    background: rgba(255,255,255,.38);
-    border-color: rgba(255,255,255,.6);
+    background: rgba(255, 255, 255, .38);
+    border-color: rgba(255, 255, 255, .6);
 }
 
 body:has(#dark-mode:not(:checked)) .input-box {
     color: #182033;
-    background: rgba(255,255,255,.75);
-    border-color: rgba(50,70,110,.12);
+    background: rgba(255, 255, 255, .75);
+    border-color: rgba(50, 70, 110, .12);
 
     box-shadow:
-        inset 3px 3px 8px rgba(70,90,130,.10);
+        inset 3px 3px 8px rgba(70, 90, 130, .10);
 }
 
 body:has(#dark-mode:not(:checked)) .select-box,
 body:has(#dark-mode:not(:checked)) .date-box {
     color: #182033;
-    background: rgba(255,255,255,.75);
+    background: rgba(255, 255, 255, .75);
 }
 
 body:has(#dark-mode:not(:checked)) .task-list li {
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.85),
-            rgba(245,248,255,.65)
-        );
+        linear-gradient(145deg,
+            rgba(255, 255, 255, .85),
+            rgba(245, 248, 255, .65));
 
-    border-color: rgba(70,90,130,.10);
+    border-color: rgba(70, 90, 130, .10);
 
     box-shadow:
-        8px 10px 22px rgba(50,70,110,.10),
-        -5px -5px 14px rgba(255,255,255,.85);
+        8px 10px 22px rgba(50, 70, 110, .10),
+        -5px -5px 14px rgba(255, 255, 255, .85);
 }
 
 body:has(#dark-mode:not(:checked)) .task-text {
@@ -899,7 +820,7 @@ body:has(#dark-mode:not(:checked)) .completed .task-text {
 }
 
 body:has(#dark-mode:not(:checked)) .filter-container {
-    background: rgba(255,255,255,.35);
+    background: rgba(255, 255, 255, .35);
 }
 
 body:has(#dark-mode:not(:checked)) .filter-btn {
@@ -911,12 +832,10 @@ body:has(#dark-mode:not(:checked)) .filter-btn.active {
 }
 
 body:has(#dark-mode:not(:checked)) .app-footer {
-    border-color: rgba(50,70,110,.12);
+    border-color: rgba(50, 70, 110, .12);
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE */
 
 @media (max-width: 650px) {
 
@@ -1002,9 +921,7 @@ body:has(#dark-mode:not(:checked)) .app-footer {
     }
 }
 
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
+/* ACCESSIBILITY */
 
 button,
 input,
@@ -1020,6 +937,7 @@ select:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
