@@ -65,3 +65,10 @@ to-do-list/
 ├── script.js        # Core JavaScript application logic
 ├── preview.png      # Application screenshot for preview
 └── README.md        # Project documentation
+
+👨‍💻 Author
+Muhammad Ahmad Khan
+
+Full-Stack Developer | Software Developer
+
+I am a software development student and aspiring full-stack developer focused on building practical, modern, and user-friendly web applications. I am continuously improving my skills by working on real-world projects across frontend development, backend development, databases, and full-stack technologies.
